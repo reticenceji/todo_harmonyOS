@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="nav-bar">
+        <button style="right: 0px;" onclick="ClickToBack"> back </button>
+        <button style="left: 0px;" onclick="ClickToSave"> save </button>
+    </div>
+
+    <div class="content">
+        <textarea class="title">
+            {{title}}
+        </textarea>
+
+        <textarea class="text">
+            {{text}}
+        </textarea>
+    </div>
+
+</div>

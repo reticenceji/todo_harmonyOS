@@ -1,0 +1,68 @@
+{
+  "app": {
+    "bundleName": "com.example.backup",
+    "vendor": "example",
+    "version": {
+      "code": 1000000,
+      "name": "1.0.0"
+    }
+  },
+  "deviceConfig": {},
+  "module": {
+    "package": "com.example.backup",
+    "name": ".MyApplication",
+    "mainAbility": "com.example.backup.MainAbility",
+    "deviceType": [
+      "phone"
+    ],
+    "distro": {
+      "deliveryWithInstall": true,
+      "moduleName": "entry",
+      "moduleType": "entry",
+      "installationFree": false
+    },
+    "abilities": [
+      {
+        "skills": [
+          {
+            "entities": [
+              "entity.system.home"
+            ],
+            "actions": [
+              "action.system.home"
+            ]
+          }
+        ],
+        "name": "com.example.backup.MainAbility",
+        "icon": "$media:icon",
+        "description": "$string:mainability_description",
+        "label": "$string:entry_MainAbility",
+        "type": "page",
+        "launchType": "standard"
+      },
+      {
+        "permissions": [
+          "com.example.backup.DataAbilityShellProvider.PROVIDER"
+        ],
+        "name": "com.example.backup.TodoDataAbility",
+        "icon": "$media:icon",
+        "description": "$string:tododataability_description",
+        "type": "data",
+        "uri": "dataability://com.example.backup.TodoDataAbility"
+      }
+    ],
+    "js": [
+      {
+        "pages": [
+          "pages/index/index",
+          "pages/edit/edit"
+        ],
+        "name": "default",
+        "window": {
+          "designWidth": 720,
+          "autoDesignWidth": true
+        }
+      }
+    ]
+  }
+}

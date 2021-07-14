@@ -1,0 +1,108 @@
+.container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    /* 意思是其中的元素相對位置是中心 */
+    background-color: #f1f1f1;
+}
+.search-box{
+    margin: 17px;
+}
+.title-box{
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.title{
+    margin-top: 20px;
+    margin-right: 20px;
+    width: 90%;
+    font-size: 40px;
+}
+
+.number{
+    font-size: 15px;
+    color: #555555;
+    margin-right: 30px;
+    width: 90%;
+}
+
+.todo-item {
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 80px;
+    height: 80px;
+    justify-content: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 0px 10px;
+    margin-bottom: 15px;
+    flex-direction: column;
+}
+
+.title-text{
+    margin: 4;
+    margin-right: 10px;
+    font-size: 28px;
+}
+.date-text{
+    font-size: 17px;
+    color: gray;
+}
+
+.delete-choose {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: 90%;
+    bottom: 25%;
+}
+.addButton {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #bcbcbc;
+    justify-content: space-between;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    right: 6%;
+    bottom: 5%;
+    font-size: 40px;
+    opacity: 0.8;
+    position: fixed;
+}
+
+
+/*@media screen and (device-type: tablet) and (orientation: landscape) {*/
+/*    .title {*/
+/*        font-size: 100px;*/
+/*    }*/
+/*}*/
+
+/*@media screen and (device-type: wearable) {*/
+/*    .title {*/
+/*        font-size: 28px;*/
+/*        color: #FFFFFF;*/
+/*    }*/
+/*}*/
+
+/*@media screen and (device-type: tv) {*/
+/*    .container {*/
+/*        background-image: url("../../common/images/Wallpaper.png");*/
+/*        background-size: cover;*/
+/*        background-repeat: no-repeat;*/
+/*        background-position: center;*/
+/*    }*/
+
+/*    .title {*/
+/*        font-size: 100px;*/
+/*        color: #FFFFFF;*/
+/*    }*/
+/*}*/
+
+/*@media screen and (device-type: phone) and (orientation: landscape) {*/
+/*    .title {*/
+/*        font-size: 60px;*/
+/*    }*/
+/*}*/
+
