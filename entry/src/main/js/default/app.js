@@ -4,5 +4,5 @@ export default {
     },
     onDestroy() {
         console.info('AceApplication onDestroy');
-    }
+    },
 };

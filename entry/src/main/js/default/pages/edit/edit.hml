@@ -5,11 +5,11 @@
     </div>
 
     <div class="content">
-        <textarea class="title">
+        <textarea class="title" onchange="passTitle">
             {{title}}
         </textarea>
 
-        <textarea class="text">
+        <textarea class="text" onchange="passText">
             {{text}}
         </textarea>
     </div>

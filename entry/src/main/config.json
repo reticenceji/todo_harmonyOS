@@ -9,6 +9,14 @@
   },
   "deviceConfig": {},
   "module": {
+    "metaData": {
+        "customizeData": [
+          {
+            "name": "hwc-theme",
+            "value": "androidhwext:style/Theme.Emui.Light.NoTitleBar"
+          }
+        ]
+    },
     "package": "com.example.backup",
     "name": ".MyApplication",
     "mainAbility": "com.example.backup.MainAbility",
@@ -41,14 +49,10 @@
         "launchType": "standard"
       },
       {
-        "permissions": [
-          "com.example.backup.DataAbilityShellProvider.PROVIDER"
-        ],
-        "name": "com.example.backup.TodoDataAbility",
+        "name": "com.example.backup.TodoServiceAbility",
         "icon": "$media:icon",
-        "description": "$string:tododataability_description",
-        "type": "data",
-        "uri": "dataability://com.example.backup.TodoDataAbility"
+        "description": "$string:todoserviceability_description",
+        "type": "service"
       }
     ],
     "js": [

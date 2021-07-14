@@ -15,6 +15,10 @@
     {
       "name": "tododataability_description",
       "value": "hap sample empty provider"
+    },
+    {
+      "name": "todoserviceability_description",
+      "value": "hap sample empty service"
     }
   ]
 }

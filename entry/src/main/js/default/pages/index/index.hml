@@ -16,7 +16,7 @@
                 <text class="title-text"> {{$item.title}} </text>
                 <text class="date-text"> {{$item.date}} </text>
                 <div class="delete-choose">
-                    <input type="checkbox" value="{{$idx}}" disabled="{{!choose_delete}}" show="{{choose_delete}}" onchange="ClickToDelete">
+                    <input type="checkbox" value="{{$idx}}" disabled="{{!choose_delete}}" show="{{choose_delete}}" onchange="ClickToDelete($idx)">
                     </input>
                 </div>
             </list-item>

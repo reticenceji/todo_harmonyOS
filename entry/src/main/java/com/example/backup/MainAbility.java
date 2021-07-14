@@ -9,7 +9,7 @@ import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
 
 public class MainAbility extends AceAbility {
-    public Preferences preferences;
+    static public Preferences preferences;
 
     @Override
     public void onStart(Intent intent) {
@@ -19,10 +19,14 @@ public class MainAbility extends AceAbility {
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         String filename = "todoDB";
         preferences = databaseHelper.getPreferences(filename);
+        // 需要注册
+        TodoServiceAbility.register(this);
     }
 
     @Override
     public void onStop() {
+        // 取消注册
+        TodoServiceAbility.unregister();
         super.onStop();
     }
 }

@@ -14,16 +14,16 @@
 }
 
 .title{
-    margin-top: 20px;
-    margin-right: 20px;
+    margin-top: 18px;
+    margin-left: 5px;
     width: 90%;
     font-size: 40px;
 }
 
 .number{
-    font-size: 15px;
+    font-size: 14px;
     color: #555555;
-    margin-right: 30px;
+    margin-left: 5px;
     width: 90%;
 }
 
