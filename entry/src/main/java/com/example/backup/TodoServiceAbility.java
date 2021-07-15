@@ -26,6 +26,7 @@ public class TodoServiceAbility extends AceInternalAbility {
     public static final int DELETE_TODOS = 1002;
     public static final int UPDATE_TODOS = 1003;
     public static final int INSERT_TODOS = 1004;
+    public static final int SELECT_TODO = 1005;
 
     // 定义日志标签
     private static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0, "TodoDatabase");
@@ -75,30 +76,52 @@ public class TodoServiceAbility extends AceInternalAbility {
                 HiLog.debug(LABEL, "insert or update success");
                 break;
             }
-            case SELECT_TODOS:
-            default: {
+            case SELECT_TODOS:{
+                // 返回结果当前仅支持String，对于复杂结构可以序列化为ZSON字符串上报
+                HiLog.debug(LABEL, "Database Return All Result");
+                Set<String> indexes = new HashSet<>();
+                for (String i: MainAbility.preferences.getAll().keySet()){
+                    indexes.add(i.split(" ")[0]);
+                }
+
+                for (String i: indexes){
+                    String title = MainAbility.preferences.getString(i+" title","");
+                    result.put("title",title);
+                    String date = MainAbility.preferences.getString(i+" date","");
+                    result.put("date",date);
+                    // 不需要回传text
+//                    String text = MainAbility.preferences.getString(String.format("%1$d text",i ),"");
+//                    result.put("text",text);
+                    HiLog.debug(LABEL, String.valueOf(result));
+                    String rString = ZSONObject.toZSONString(result);
+                    ret.put(i,rString);
+                }
+                reply.writeString(ZSONObject.toZSONString(ret));
+                HiLog.debug(LABEL, "select all success");
                 break;
             }
+            case SELECT_TODO: {
+                String dataStr = data.readString();
+                TodoRequestParam param = new TodoRequestParam();
+                try {
+                    param = ZSONObject.stringToClass(dataStr, TodoRequestParam.class);
+                } catch (RuntimeException e) {
+                    HiLog.error(LABEL, "convert failed.");
+                }
+                String r = MainAbility.preferences.getString(param.id+" text","");
+                reply.writeString(r);
+                HiLog.debug(LABEL, "select one text success");
+                break;
+            }
+            default: {
+                return false;
+            }
         }
-        // 返回结果当前仅支持String，对于复杂结构可以序列化为ZSON字符串上报
-        HiLog.debug(LABEL, "Database Return All Result");
-        int size = MainAbility.preferences.getAll().size()/3;
-//        String[] rString = new String[size];
-        for (int i=0;i<size;i++){
-            String title = MainAbility.preferences.getString(String.format("%1$d title",i ),"");
-            result.put("title",title);
-            String date = MainAbility.preferences.getString(String.format("%1$d date",i ),"");
-            result.put("date",date);
-            String text = MainAbility.preferences.getString(String.format("%1$d text",i ),"");
-            result.put("text",text);
-            HiLog.debug(LABEL, String.valueOf(result));
-            String rString = ZSONObject.toZSONString(result);
-            ret.put(String.format("%1$d",i),rString);
-        }
-        reply.writeString(ZSONObject.toZSONString(ret));
+        MainAbility.preferences.flush();
+
         // SYNC
 //        if (option.getFlags() == MessageOption.TF_SYNC) {
-
+//             ...
 //        } else {
 //            // ASYNC
 //            MessageParcel responseData = MessageParcel.obtain();

@@ -9,6 +9,7 @@ const ACTION_MESSAGE_SELECT_TODOS = 1001;
 const ACTION_MESSAGE_DELETE_TODOS = 1002;
 const ACTION_MESSAGE_UPDATE_TODOS = 1003;
 const ACTION_MESSAGE_INSERT_TODOS = 1004;
+const ACTION_MESSAGE_SELECT_TODO = 1005;
 
 
 export default {
@@ -21,12 +22,11 @@ export default {
         console.info("edit.onShow()");
         if (this.content == null) {
             this.title = "";
-            this.text = "";
         }
         else {
             this.title = this.content.title;
-            this.text = this.content.text;
         };
+        this.getText();
     },
     ClickToBack() {
         console.info("ClickToBack()");
@@ -63,7 +63,20 @@ export default {
 
         var result = await FeatureAbility.callAbility(action);
         console.info("insert ret="+result);
-//        var ret = JSON.parse(result);
+    },
+    getText: async function(){
+        var actionData = {};
+        actionData.id = this.index;
 
+        var action = {};
+        action.bundleName = 'com.example.backup';
+        action.abilityName = 'com.example.backup.TodoServiceAbility';
+        action.messageCode = ACTION_MESSAGE_SELECT_TODO;
+        action.data = actionData;
+        action.abilityType = ABILITY_TYPE_INTERNAL;
+        action.syncOption = ACTION_SYNC;
+
+        var result = await FeatureAbility.callAbility(action);
+        this.text = result;
     }
 }
