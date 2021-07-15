@@ -19,7 +19,7 @@
     },
     "reqPermissions": [
       {
-        "name": "ohos.permission.DISTRIBUTED_DATASYNC"
+        "name": "ohos.permission.DISTRIBUTED_DATASYNC",
       }
     ],
     "package": "com.example.backup",

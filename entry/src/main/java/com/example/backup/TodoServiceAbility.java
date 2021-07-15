@@ -3,6 +3,10 @@ package com.example.backup;
 import ohos.ace.ability.AceInternalAbility;
 import ohos.agp.components.DependentLayout;
 import ohos.app.AbilityContext;
+import ohos.data.distributed.common.*;
+import ohos.data.distributed.device.DeviceFilterStrategy;
+import ohos.data.distributed.device.DeviceInfo;
+import ohos.data.distributed.user.SingleKvStore;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
 import ohos.location.RequestParam;
@@ -32,7 +36,7 @@ public class TodoServiceAbility extends AceInternalAbility {
     private static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0, "TodoDatabase");
 
     private static TodoServiceAbility instance;
-    private AbilityContext abilityContext;
+    private MainAbility abilityContext;
 
     // 如果多个Ability实例都需要注册当前InternalAbility实例，需要更改构造函数，设定自己的bundleName和abilityName
 
@@ -41,9 +45,10 @@ public class TodoServiceAbility extends AceInternalAbility {
     }
 
     public boolean onRemoteRequest(int code, MessageParcel data, MessageParcel reply, MessageOption option) {
+        SingleKvStore db = abilityContext.getSingleKvStore();
+
         Map<String, String> result = new HashMap<>();
         Map<String, String> ret = new HashMap<>();
-
         HiLog.debug(LABEL, "onRemoteRequest");
 
         switch (code) {
@@ -55,9 +60,9 @@ public class TodoServiceAbility extends AceInternalAbility {
                 } catch (RuntimeException e) {
                     HiLog.error(LABEL, "convert failed.");
                 }
-                MainAbility.preferences.delete(param.id+" title");
-                MainAbility.preferences.delete(param.id+" date");
-                MainAbility.preferences.delete(param.id+" text");
+                db.delete(param.id+" title");
+                db.delete(param.id+" date");
+                db.delete(param.id+" text");
                 HiLog.debug(LABEL, "insert or update success");
                 break;
             }
@@ -70,9 +75,9 @@ public class TodoServiceAbility extends AceInternalAbility {
                 } catch (RuntimeException e) {
                     HiLog.error(LABEL, "convert failed.");
                 }
-                MainAbility.preferences.putString(param.id+" title",param.title);
-                MainAbility.preferences.putString(param.id+" date",param.date);
-                MainAbility.preferences.putString(param.id+" text",param.text);
+                db.putString(param.id+" title",param.title);
+                db.putString(param.id+" date",param.date);
+                db.putString(param.id+" text",param.text);
                 HiLog.debug(LABEL, "insert or update success");
                 break;
             }
@@ -80,14 +85,14 @@ public class TodoServiceAbility extends AceInternalAbility {
                 // 返回结果当前仅支持String，对于复杂结构可以序列化为ZSON字符串上报
                 HiLog.debug(LABEL, "Database Return All Result");
                 Set<String> indexes = new HashSet<>();
-                for (String i: MainAbility.preferences.getAll().keySet()){
-                    indexes.add(i.split(" ")[0]);
+                for (Entry i: db.getEntries("")){
+                    indexes.add(i.getKey().split(" ")[0]);
                 }
 
                 for (String i: indexes){
-                    String title = MainAbility.preferences.getString(i+" title","");
+                    String title = db.getString(i+" title");
                     result.put("title",title);
-                    String date = MainAbility.preferences.getString(i+" date","");
+                    String date = db.getString(i+" date");
                     result.put("date",date);
                     // 不需要回传text
 //                    String text = MainAbility.preferences.getString(String.format("%1$d text",i ),"");
@@ -108,7 +113,12 @@ public class TodoServiceAbility extends AceInternalAbility {
                 } catch (RuntimeException e) {
                     HiLog.error(LABEL, "convert failed.");
                 }
-                String r = MainAbility.preferences.getString(param.id+" text","");
+                String r;
+                try {
+                    r = db.getString(param.id+" text");
+                } catch (KvStoreException k) {
+                    r = "";
+                }
                 reply.writeString(r);
                 HiLog.debug(LABEL, "select one text success");
                 break;
@@ -117,8 +127,10 @@ public class TodoServiceAbility extends AceInternalAbility {
                 return false;
             }
         }
-        MainAbility.preferences.flush();
-
+//        MainAbility.singleKvStore.flush();
+//        KvStoreObserver kvStoreObserverClient = new KvStoreObserverClient();
+//        db.subscribe(SubscribeType.SUBSCRIBE_TYPE_ALL, kvStoreObserverClient);
+        abilityContext.syncContact();
         // SYNC
 //        if (option.getFlags() == MessageOption.TF_SYNC) {
 //             ...
@@ -141,12 +153,12 @@ public class TodoServiceAbility extends AceInternalAbility {
     /**
      * Internal ability 注册接口。
      */
-    public static void register(AbilityContext abilityContext) {
+    public static void register(MainAbility abilityContext) {
         instance = new TodoServiceAbility();
         instance.onRegister(abilityContext);
     }
 
-    private void onRegister(AbilityContext abilityContext) {
+    private void onRegister(MainAbility abilityContext) {
         this.abilityContext = abilityContext;
         this.setInternalAbilityHandler(this::onRemoteRequest);
     }
@@ -163,5 +175,8 @@ public class TodoServiceAbility extends AceInternalAbility {
         this.setInternalAbilityHandler(null);
     }
 
+    /**
+     * 数据同步
+     */
 
 }

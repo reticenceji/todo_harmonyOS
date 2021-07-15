@@ -27,7 +27,6 @@ export default {
         choose_indexes: [], // 被选择要删除的TODO列表
         todoList: [], // TODO列表 index,title,date
         max_index: 0,
-        just_show: false,
     },
 // 初始化
     onInit() {
@@ -38,10 +37,8 @@ export default {
         console.info(this.textList);
     },
     onShow() {
-        if (this.just_show == false){
-            this.getTodos();
-            this.number = this.todoList.length.toString() + this.$t('strings.number');
-        }
+        this.getTodos();
+        this.number = this.todoList.length.toString() + this.$t('strings.number');
     },
 // 长按TODO text 可以选择删除
     LongPressToDelete() {
@@ -96,8 +93,6 @@ export default {
             this.add_delete = "+";
         }
     },
-
-
 // 希望得到的返回数据是所有的title和date
     getTodos: async function(){
         console.info("try to get TODOs");
@@ -170,7 +165,6 @@ export default {
     },
     onSaveData(saveData) {
         // 数据保存到savedData中进行迁移。
-        this.just_show = true;
         var data = this.shareData;
         Object.assign(saveData, data);
 //        console.info(JSON.stringfy(saveData));

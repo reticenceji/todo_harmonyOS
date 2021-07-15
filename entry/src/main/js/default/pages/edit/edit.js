@@ -51,7 +51,9 @@ export default {
         actionData.id = this.index;
         actionData.title = this.title;
         actionData.text = this.text;
-        actionData.date = "2021";   // TODO
+
+        var d = new Date();//获取系统当前时间
+        actionData.date = d.getFullYear()+"/"+d.getMonth()+"/"+d.getDate();   // TODO
 
         var action = {};
         action.bundleName = 'com.example.backup';
@@ -65,6 +67,7 @@ export default {
         console.info("insert ret="+result);
     },
     getText: async function(){
+        console.log("get Test of "+this.index);
         var actionData = {};
         actionData.id = this.index;
 
@@ -78,5 +81,30 @@ export default {
 
         var result = await FeatureAbility.callAbility(action);
         this.text = result;
+    },
+    // 页面迁移 ===========================================================
+    onRestoreData(restoreData) {
+        // 收到迁移数据，恢复。
+        this.continueAbilityData = restoreData;
+    },
+    tryContinueAbility: async function() {
+        // 应用进行迁移
+        let result = await FeatureAbility.continueAbility();
+        console.info("result:" + JSON.stringify(result));
+    },
+    onStartContinuation() {
+        // 判断当前的状态是不是适合迁移
+        console.info("onStartContinuation");
+        return true;
+    },
+    onCompleteContinuation(code) {
+        // 迁移操作完成，code返回结果
+        console.info("nCompleteContinuation: code = " + code);
+    },
+    onSaveData(saveData) {
+        // 数据保存到savedData中进行迁移。
+        var data = this.shareData;
+        Object.assign(saveData, data);
+        //        console.info(JSON.stringfy(saveData));
     }
 }
