@@ -19,6 +19,10 @@
     {
       "name": "todoserviceability_description",
       "value": "hap sample empty service"
+    },
+    {
+      "name": "transserviceability_description",
+      "value": "hap sample empty service"
     }
   ]
 }

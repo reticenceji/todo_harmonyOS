@@ -1,0 +1,160 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 1048576 bytes for AllocateHeap
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (memory/allocation.inline.hpp:61), pid=4072, tid=0x00000000000016b8
+#
+# JRE version:  (8.0_265-b01) (build )
+# Java VM: OpenJDK 64-Bit Server VM (25.265-b01 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000001478b506800):  JavaThread "Unknown thread" [_thread_in_vm, id=5816, stack(0x0000002b06a00000,0x0000002b06b00000)]
+
+Stack: [0x0000002b06a00000,0x0000002b06b00000]
+[error occurred during error reporting (printing stack bounds), id 0xc0000005]
+
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x000001478b506800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=5816, stack(0x0000002b06a00000,0x0000002b06b00000)]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+heap address: 0x0000000091000000, size: 1776 MB, Compressed Oops mode: 32-bit
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 3
+Compressed class space size: 1073741824 Address: 0x0000000100000000
+
+Heap:
+ PSYoungGen      total 33280K, used 573K [0x00000000db000000, 0x00000000dd500000, 0x0000000100000000)
+  eden space 28672K, 2% used [0x00000000db000000,0x00000000db08f5d0,0x00000000dcc00000)
+  from space 4608K, 0% used [0x00000000dd080000,0x00000000dd080000,0x00000000dd500000)
+  to   space 4608K, 0% used [0x00000000dcc00000,0x00000000dcc00000,0x00000000dd080000)
+ ParOldGen       total 76800K, used 0K [0x0000000091000000, 0x0000000095b00000, 0x00000000db000000)
+  object space 76800K, 0% used [0x0000000091000000,0x0000000091000000,0x0000000095b00000)
+ Metaspace       used 792K, capacity 1156K, committed 1408K, reserved 1060864K
+  class space    used 76K, capacity 384K, committed 384K, reserved 1048576K
+
+Card table byte_map: [0x000001479c650000,0x000001479c9d0000] byte_map_base: 0x000001479c1c8000
+
+Marking Bits: (ParMarkBitMap*) 0x0000000074c47790
+ Begin Bits: [0x000001479cc20000, 0x000001479e7e0000)
+ End Bits:   [0x000001479e7e0000, 0x00000147a03a0000)
+
+Polling page: 0x000001478b670000
+
+CodeCache: size=245760Kb used=327Kb max_used=327Kb free=245432Kb
+ bounds [0x000001478d290000, 0x000001478d500000, 0x000001479c290000]
+ total_blobs=56 nmethods=0 adapters=38
+ compilation: enabled
+
+Compilation events (0 events):
+No events
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (10 events):
+Event: 0.018 loading class java/lang/Short
+Event: 0.018 loading class java/lang/Short done
+Event: 0.018 loading class java/lang/Integer
+Event: 0.018 loading class java/lang/Integer done
+Event: 0.018 loading class java/lang/Long
+Event: 0.018 loading class java/lang/Long done
+Event: 0.019 loading class java/lang/NullPointerException
+Event: 0.019 loading class java/lang/NullPointerException done
+Event: 0.019 loading class java/lang/ArithmeticException
+Event: 0.019 loading class java/lang/ArithmeticException done
+
+
+Dynamic libraries:
+0x00007ff6d9730000 - 0x00007ff6d976a000 	C:\Program Files\Huawei\DevEco Studio 2.1.0.501\tools\openjdk\jre\bin\java.exe
+0x00007ff93b030000 - 0x00007ff93b225000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00007ff9395a0000 - 0x00007ff93965d000 	C:\Windows\System32\KERNEL32.DLL
+0x00007ff938770000 - 0x00007ff938a37000 	C:\Windows\System32\KERNELBASE.dll
+0x00007ff9394c0000 - 0x00007ff93956a000 	C:\Windows\System32\ADVAPI32.dll
+0x00007ff939370000 - 0x00007ff93940e000 	C:\Windows\System32\msvcrt.dll
+0x00007ff93ae10000 - 0x00007ff93aeab000 	C:\Windows\System32\sechost.dll
+0x00007ff93a830000 - 0x00007ff93a954000 	C:\Windows\System32\RPCRT4.dll
+0x00007ff939e60000 - 0x00007ff93a000000 	C:\Windows\System32\USER32.dll
+0x00007ff938ba0000 - 0x00007ff938bc2000 	C:\Windows\System32\win32u.dll
+0x00007ff939090000 - 0x00007ff9390ba000 	C:\Windows\System32\GDI32.dll
+0x00007ff938bd0000 - 0x00007ff938cd9000 	C:\Windows\System32\gdi32full.dll
+0x00007ff938de0000 - 0x00007ff938e7d000 	C:\Windows\System32\msvcp_win.dll
+0x00007ff938ee0000 - 0x00007ff938fe0000 	C:\Windows\System32\ucrtbase.dll
+0x00007ff9236a0000 - 0x00007ff92393b000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.488_none_ca04af081b815d21\COMCTL32.dll
+0x00007ff939570000 - 0x00007ff9395a0000 	C:\Windows\System32\IMM32.DLL
+0x00007ff913e80000 - 0x00007ff913f6f000 	C:\Program Files\Huawei\DevEco Studio 2.1.0.501\tools\openjdk\jre\bin\msvcr120.dll
+0x00007ff913dd0000 - 0x00007ff913e76000 	C:\Program Files\Huawei\DevEco Studio 2.1.0.501\tools\openjdk\jre\bin\msvcp120.dll
+0x0000000074460000 - 0x0000000074cc6000 	C:\Program Files\Huawei\DevEco Studio 2.1.0.501\tools\openjdk\jre\bin\server\jvm.dll
+0x00007ff93ad80000 - 0x00007ff93ad88000 	C:\Windows\System32\PSAPI.DLL
+0x00007ff921240000 - 0x00007ff921249000 	C:\Windows\SYSTEM32\WSOCK32.dll
+0x00007ff92eb50000 - 0x00007ff92eb77000 	C:\Windows\SYSTEM32\WINMM.dll
+0x00007ff930f30000 - 0x00007ff930f3a000 	C:\Windows\SYSTEM32\VERSION.dll
+0x00007ff93abf0000 - 0x00007ff93ac5b000 	C:\Windows\System32\WS2_32.dll
+0x00007ff934230000 - 0x00007ff93423f000 	C:\Program Files\Huawei\DevEco Studio 2.1.0.501\tools\openjdk\jre\bin\verify.dll
+0x00007ff933570000 - 0x00007ff933598000 	C:\Program Files\Huawei\DevEco Studio 2.1.0.501\tools\openjdk\jre\bin\java.dll
+0x00007ff92fcc0000 - 0x00007ff92fcd6000 	C:\Program Files\Huawei\DevEco Studio 2.1.0.501\tools\openjdk\jre\bin\zip.dll
+
+VM Arguments:
+java_command: C:\Users\Reticence\AppData\Local\Huawei\Sdk\toolchains\lib\hmos_app_packing_tool.jar --mode hap --assets-path C:\Users\Reticence\DevEcoStudioProjects\app_samples\ability\Backup\entry\build\intermediates\res\debug\rich\assets --force true --dex-path C:\Users\Reticence\DevEcoStudioProjects\app_samples\ability\Backup\entry\build\intermediates\transformClasses\debug\dalvik\classes.dex --json-path C:\Users\Reticence\DevEcoStudioProjects\app_samples\ability\Backup\entry\build\intermediates\res\debug\rich\config.json --resources-path C:\Users\Reticence\DevEcoStudioProjects\app_samples\ability\Backup\entry\build\intermediates\res\debug\rich\resources --index-path C:\Users\Reticence\DevEcoStudioProjects\app_samples\ability\Backup\entry\build\intermediates\res\debug\rich\resources.index --out-path C:\Users\Reticence\DevEcoStudioProjects\app_samples\ability\Backup\entry\build\outputs\hap\debug\entry-debug-rich-unsigned.hap --shell-apk-path C:\Users\Reticence\DevEcoStudioProjects\app_samples\ability\Backup\entry\build\intermediates\shell_output\debug\entry_debug_signed_entry.apk --pack-info-path C:\Users\Reticence\DevEcoStudioProjects\app_samples\ability\Backup\entry\build\outputs\hap\debug\pack.info
+java_class_path (initial): C:\Users\Reticence\AppData\Local\Huawei\Sdk\toolchains\lib\hmos_app_packing_tool.jar
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\Reticence\AppData\Local\Microsoft\WindowsApps;;C:\Program Files\Huawei\DevEco Studio 2.1.0.501\bin;;C:\Users\Reticence\AppData\Local\Programs\Microsoft VS Code\bin
+USERNAME=Reticence
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 10.0 , 64 bit Build 19041 (10.0.19041.292)
+
+CPU:total 8 (initial active 8) (8 cores per cpu, 1 threads per core) family 23 model 24 stepping 1, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, mmxext, 3dnowpref, lzcnt, sse4a, tsc, tscinvbit, tscinv, bmi1
+
+Memory: 4k page, physical 7272780k(1230548k free), swap 7272780k(5948k free)
+
+vm_info: OpenJDK 64-Bit Server VM (25.265-b01) for windows-amd64 JRE (1.8.0_265-b01), built on Jul 28 2020 15:11:27 by "jenkins" with MS VC++ 12.0 (VS2013)
+
+time: Thu Jul 15 09:49:14 2021
+timezone: China Standard Time
+elapsed time: 0 seconds (0d 0h 0m 0s)
+

@@ -1,5 +1,6 @@
 package com.example.backup;
 
+import ohos.aafwk.ability.IAbilityContinuation;
 import ohos.ace.ability.AceAbility;
 import ohos.aafwk.content.Intent;
 import ohos.app.Context;
@@ -8,13 +9,14 @@ import ohos.data.preferences.Preferences;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
 
-public class MainAbility extends AceAbility {
+public class MainAbility extends AceAbility implements IAbilityContinuation {
     static public Preferences preferences;
 
     @Override
     public void onStart(Intent intent) {
         super.onStart(intent);
-//        HiLog.info(new HiLogLabel(HiLog.LOG_APP, 0x123, "JSApp"), "on start");
+        // 开发者显示声明需要使用的权限
+        requestPermissionsFromUser(new String[]{"ohos.permission.DISTRIBUTED_DATASYNC"}, 0);
         Context context = this.getContext();
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         String filename = "todoDB";
@@ -29,4 +31,6 @@ public class MainAbility extends AceAbility {
         TodoServiceAbility.unregister();
         super.onStop();
     }
+
+
 }

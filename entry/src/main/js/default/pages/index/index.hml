@@ -1,6 +1,6 @@
 <div class="container">
     <div class="title-box">
-        <text class="title"> {{ title }}</text>
+        <text class="title" onclick="tryContinueAbility"> {{ title }}</text>
         <text class="number"> {{ number }} </text>
     </div>
 

@@ -10,13 +10,18 @@
   "deviceConfig": {},
   "module": {
     "metaData": {
-        "customizeData": [
-          {
-            "name": "hwc-theme",
-            "value": "androidhwext:style/Theme.Emui.Light.NoTitleBar"
-          }
-        ]
+      "customizeData": [
+        {
+          "name": "hwc-theme",
+          "value": "androidhwext:style/Theme.Emui.Light.NoTitleBar"
+        }
+      ]
     },
+    "reqPermissions": [
+      {
+        "name": "ohos.permission.DISTRIBUTED_DATASYNC"
+      }
+    ],
     "package": "com.example.backup",
     "name": ".MyApplication",
     "mainAbility": "com.example.backup.MainAbility",
@@ -53,7 +58,7 @@
         "icon": "$media:icon",
         "description": "$string:todoserviceability_description",
         "type": "service"
-      }
+      },
     ],
     "js": [
       {
