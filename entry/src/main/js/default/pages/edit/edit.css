@@ -30,3 +30,40 @@ button {
     background-color: #ffffff;
     height: 100%;
 }
+
+.addButton {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #bcbcbc;
+    justify-content: space-between;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    right: 6%;
+    bottom: 5%;
+    font-size: 40px;
+    opacity: 0.8;
+    position: fixed;
+}
+
+.inner-txt{
+    margin: 10px;
+}
+.dialog-div {
+    flex-direction: column;
+    align-items: center;
+}
+
+.txt {
+    font-size: 18px;
+    width: 120px;
+}
+.slide {
+    padding: 0px;
+}
+
+picker{
+    font-size: 20px ;
+    left: 50%;
+}
+

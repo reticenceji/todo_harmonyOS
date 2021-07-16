@@ -1,6 +1,6 @@
 <div class="container">
     <div class="title-box">
-        <text class="title" onclick="tryContinueAbility"> {{ title }}</text>
+        <text class="title" onclick="onShow"> {{ title }}</text>
         <text class="number"> {{ number }} </text>
     </div>
 
@@ -12,18 +12,21 @@
 
     <div class="text-box">
         <list>
-            <list-item for="{{todoList}}" class="todo-item" onlongpress="LongPressToDelete" onclick="ClickToEdit($idx)">
-                <text class="title-text"> {{$item.title}} </text>
-                <text class="date-text"> {{$item.date}} </text>
+            <list-item for="{{todoList}}" class="todo-item" onlongpress="LongPressToChoose" onclick="ClickToEdit($idx)">
+                <text class="title-text" > {{$item.title}} </text>
+
+                <text if="{{$item.ddl}}" class="date-text" style="color: red;"> DDL:{{$item.ddl}} </text>
+                <text else class="date-text"> {{$item.date}} </text>
+
                 <div class="delete-choose">
-                    <input type="checkbox" value="{{$idx}}" disabled="{{!choose_delete}}" show="{{choose_delete}}" onchange="ClickToDelete($idx)">
+                    <input type="checkbox" value="{{$idx}}" disabled="{{!choose_delete}}" show="{{choose_delete}}" onchange="ChooseToDelete($idx)">
                     </input>
                 </div>
             </list-item>
         </list>
     </div>
 
-    <button class="addButton" type="circle" onclick="addTODO">
+    <button class="addButton" type="circle" onclick="AddOrDelete">
         {{add_delete}}
     </button>
 </div>

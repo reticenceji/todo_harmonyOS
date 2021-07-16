@@ -1,7 +1,15 @@
 {
   "strings": {
-    "title": "TODO",
+    "title": "DDL Manager",
     "search": "search",
-    "number": "TODOs"
+    "number": "DDLs",
+    "ddl": "ddl",
+    "ddl1": "It's Ok.",
+    "ddl2": "Speed up",
+    "ddl3": "OMG",
+    "cancel": "cancel",
+    "confirm": "confirm",
+    "back": "back",
+    "save": "save"
   }
 }

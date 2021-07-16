@@ -1,17 +1,45 @@
 <div class="container">
     <div class="nav-bar">
-        <button style="right: 0px;" onclick="ClickToBack"> back </button>
-        <button style="left: 0px;" onclick="ClickToSave"> save </button>
+        <button style="right: 0px;" onclick="ClickToBack"> {{ BACK }} </button>
+        <button style="left: 0px;" onclick="InsertTodos"> {{ SAVE }}</button>
     </div>
 
     <div class="content">
-        <textarea class="title" onchange="passTitle">
+        <textarea class="title" onchange="PassTitle">
             {{title}}
         </textarea>
 
-        <textarea class="text" onchange="passText">
+        <textarea class="text" onchange="PassText">
             {{text}}
         </textarea>
     </div>
 
+    <button class="addButton" type="circle" onclick="AddDdl">
+        +
+    </button>
+
+    <dialog id="ddl_dialog" class="dialog-main">
+        <div class="dialog-div">
+            <div class="inner-txt">
+                <text class="txt">{{ddl_text}}</text>
+                <picker type="date" value="{{ddl}}" onchange="PassDdl"> </picker>
+            </div>
+            <div class="inner-txt">
+                <text class="txt" >{{ddl1_text}}</text>
+                <slider class="slide" value="{{ddls[0]}}" onchange="PassDdls(0)"></slider>
+            </div>
+            <div class="inner-txt">
+                <text class="txt">{{ddl2_text}}</text>
+                <slider class="slide" value="{{ddls[1]}}" onchange="PassDdls(1)"></slider>
+            </div>
+            <div class="inner-txt">
+                <text class="txt">{{ddl3_text}}</text>
+                <slider class="slide" value="{{ddls[2]}}" onchange="PassDdls(2)"></slider>
+            </div>
+            <div class="inner-btn">
+                <button type="capsule" value="{{ CANCEL }}" onclick="CancelDdl" class="btn-txt"></button>
+                <button type="capsule" value="{{ CONFIRM }}" onclick="SaveDdl" class="btn-txt"></button>
+            </div>
+        </div>
+    </dialog>
 </div>

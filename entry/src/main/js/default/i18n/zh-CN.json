@@ -1,7 +1,15 @@
 {
   "strings": {
-    "title": "备忘录",
+    "title": "DDL管理器",
     "search": "搜索",
-    "number": "条笔记"
+    "number": "个DDL",
+    "ddl": "截止日期",
+    "ddl1": "还能接受",
+    "ddl2": "该抓紧了",
+    "ddl3": "人之将死",
+    "cancel": "取消",
+    "confirm": "确定",
+    "back": "返回",
+    "save": "保存"
   }
 }

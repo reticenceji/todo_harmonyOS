@@ -69,6 +69,7 @@ public class TodoServiceAbility extends AceInternalAbility {
                 db.delete(param.id+" title");
                 db.delete(param.id+" date");
                 db.delete(param.id+" text");
+                db.delete(param.id+" ddl");
                 HiLog.debug(LABEL, "insert or update success");
                 break;
             }
@@ -84,6 +85,7 @@ public class TodoServiceAbility extends AceInternalAbility {
                 db.putString(param.id+" title",param.title);
                 db.putString(param.id+" date",param.date);
                 db.putString(param.id+" text",param.text);
+                db.putString(param.id+" ddl",param.ddl);
                 HiLog.debug(LABEL, "insert or update success");
                 break;
             }
@@ -100,7 +102,9 @@ public class TodoServiceAbility extends AceInternalAbility {
                     result.put("title",title);
                     String date = db.getString(i+" date");
                     result.put("date",date);
-                    HiLog.debug(LABEL, String.valueOf(result));
+                    String ddl = db.getString(i+" ddl");
+                    result.put("ddl",ddl);
+//                    HiLog.debug(LABEL, String.valueOf(result));
                     String rString = ZSONObject.toZSONString(result);
                     ret.put(i,rString);
                 }
