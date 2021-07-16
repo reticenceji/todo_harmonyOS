@@ -22,11 +22,13 @@ public class MainAbility extends AceAbility implements IAbilityContinuation {
     static public String storeID = "TodoDistributeDatabase";
     private SingleKvStore singleKvStore;
     private KvManager kvManager;
-    private static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0, "TodoDatabase");
-    private boolean dbbugfix;
+    private static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0, "MainAbility");
+
     @Override
     public void onStart(Intent intent) {
         super.onStart(intent);
+        HiLog.info(LABEL,"jgq onStart");
+
         // 开发者显示声明需要使用的权限
         requestPermissionsFromUser(new String[]{"ohos.permission.DISTRIBUTED_DATASYNC"}, 0);
         Context context = this.getContext();
@@ -46,7 +48,6 @@ public class MainAbility extends AceAbility implements IAbilityContinuation {
         // 订阅
         KvStoreObserver kvStoreObserverClient = new KvStoreObserverClient();
         singleKvStore.subscribe(SubscribeType.SUBSCRIBE_TYPE_ALL, kvStoreObserverClient);
-        dbbugfix = true;
     }
 
     public SingleKvStore getSingleKvStore() {
@@ -56,9 +57,9 @@ public class MainAbility extends AceAbility implements IAbilityContinuation {
     @Override
     public void onStop() {
         // 取消注册
+        HiLog.info(LABEL,"jgq onStop");
         TodoServiceAbility.unregister();
         super.onStop();
-        dbbugfix = false;
     }
 
     public void syncContact() {

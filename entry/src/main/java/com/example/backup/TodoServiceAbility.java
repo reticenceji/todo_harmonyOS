@@ -1,49 +1,54 @@
 package com.example.backup;
 
 import ohos.ace.ability.AceInternalAbility;
-import ohos.agp.components.DependentLayout;
-import ohos.app.AbilityContext;
 import ohos.data.distributed.common.*;
-import ohos.data.distributed.device.DeviceFilterStrategy;
-import ohos.data.distributed.device.DeviceInfo;
 import ohos.data.distributed.user.SingleKvStore;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
-import ohos.location.RequestParam;
-import ohos.rpc.IRemoteObject;
 import ohos.rpc.MessageOption;
 import ohos.rpc.MessageParcel;
-import ohos.rpc.RemoteException;
-import ohos.utils.zson.ZSONArray;
 import ohos.utils.zson.ZSONObject;
 
 import java.lang.reflect.Array;
 import java.util.*;
 
+/**
+ * AceInternalAbility Represents internal abilities that are integrated into the JS UI framework.
+ */
 public class TodoServiceAbility extends AceInternalAbility {
+    // 常量
     private static final String BUNDLE_NAME = "com.example.backup";
     private static final String ABILITY_NAME = "com.example.backup.TodoServiceAbility";
     public static final int SUCCESS = 0;
     public static final int ERROR = 1;
-
     public static final int SELECT_TODOS = 1001;
     public static final int DELETE_TODOS = 1002;
     public static final int UPDATE_TODOS = 1003;
     public static final int INSERT_TODOS = 1004;
     public static final int SELECT_TODO = 1005;
-
     // 定义日志标签
     private static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0, "TodoDatabase");
-
+    // TodoServiceAbility 类的一个实例，所以从语义上他只能被初始化一次
     private static TodoServiceAbility instance;
+    // Context
     private MainAbility abilityContext;
 
-    // 如果多个Ability实例都需要注册当前InternalAbility实例，需要更改构造函数，设定自己的bundleName和abilityName
-
+    /**
+     * 如果多个Ability实例都需要注册当前InternalAbility实例，需要更改构造函数，设定自己的bundleName和abilityName
+     * 但是在这里我们的InternalAbility只会实例化一次
+     */
     public TodoServiceAbility() {
         super(BUNDLE_NAME, ABILITY_NAME);
     }
 
+    /**
+     * 关键的接口，JS端携带的操作请求业务码以及业务数据，业务执行完后，返回响应给JS端。开发者需要继承RemoteObject类并重写该方法
+     * @param code Js端发送的业务请求编码 PA端定义需要与Js端业务请求码保持一致
+     * @param data Js端发送的MessageParcel对象，当前仅支持String格式
+     * @param reply 将本地业务响应返回给Js端的MessageParcel对象，当前仅支持String格式
+     * @param option 指示操作是同步还是异步的方式，但是我这里只有同步处理方式
+     * @return 不知道有什么用
+     */
     public boolean onRemoteRequest(int code, MessageParcel data, MessageParcel reply, MessageOption option) {
         SingleKvStore db = abilityContext.getSingleKvStore();
 
@@ -51,6 +56,7 @@ public class TodoServiceAbility extends AceInternalAbility {
         Map<String, String> ret = new HashMap<>();
         HiLog.debug(LABEL, "onRemoteRequest");
 
+        // 基本思路-解析code-解析data-业务逻辑-构造reply
         switch (code) {
             case DELETE_TODOS: {
                 String dataStr = data.readString();
@@ -94,9 +100,6 @@ public class TodoServiceAbility extends AceInternalAbility {
                     result.put("title",title);
                     String date = db.getString(i+" date");
                     result.put("date",date);
-                    // 不需要回传text
-//                    String text = MainAbility.preferences.getString(String.format("%1$d text",i ),"");
-//                    result.put("text",text);
                     HiLog.debug(LABEL, String.valueOf(result));
                     String rString = ZSONObject.toZSONString(result);
                     ret.put(i,rString);
@@ -124,34 +127,17 @@ public class TodoServiceAbility extends AceInternalAbility {
                 break;
             }
             default: {
+                HiLog.debug(LABEL, "unknown code");
                 return false;
             }
-        }
-//        MainAbility.singleKvStore.flush();
-//        KvStoreObserver kvStoreObserverClient = new KvStoreObserverClient();
-//        db.subscribe(SubscribeType.SUBSCRIBE_TYPE_ALL, kvStoreObserverClient);
+        };
+        // 分布式数据库的同步
         abilityContext.syncContact();
-        // SYNC
-//        if (option.getFlags() == MessageOption.TF_SYNC) {
-//             ...
-//        } else {
-//            // ASYNC
-//            MessageParcel responseData = MessageParcel.obtain();
-//            responseData.writeString(ZSONObject.toZSONString(result));
-//            IRemoteObject remoteReply = reply.readRemoteObject();
-//            try {
-//                remoteReply.sendRequest(0, responseData, MessageParcel.obtain(), new MessageOption());
-//            } catch (RemoteException exception) {
-//                return false;
-//            } finally {
-//                responseData.reclaim();
-//            }
-//        }
         return true;
     }
 
     /**
-     * Internal ability 注册接口。
+     * Internal ability 注册接口
      */
     public static void register(MainAbility abilityContext) {
         instance = new TodoServiceAbility();
@@ -161,6 +147,7 @@ public class TodoServiceAbility extends AceInternalAbility {
     private void onRegister(MainAbility abilityContext) {
         this.abilityContext = abilityContext;
         this.setInternalAbilityHandler(this::onRemoteRequest);
+        HiLog.info(LABEL, "jgq TodoServiceAbility onRegister");
     }
 
     /**
@@ -173,10 +160,6 @@ public class TodoServiceAbility extends AceInternalAbility {
     private void onUnregister() {
         abilityContext = null;
         this.setInternalAbilityHandler(null);
+        HiLog.info(LABEL, "jgq TodoServiceAbility onUnregister");
     }
-
-    /**
-     * 数据同步
-     */
-
 }
