@@ -5,23 +5,31 @@
     </div>
 
     <div class="search-box">
-        <search>
-            {{ search }}
+        <search onchange="getTodos()" onblur="getTodos()">
         </search>
     </div>
 
     <div class="text-box">
         <list>
             <list-item for="{{todoList}}" class="todo-item" onlongpress="LongPressToChoose" onclick="ClickToEdit($idx)">
-                <text class="title-text" > {{$item.title}} </text>
-
-                <text if="{{$item.ddl}}" class="date-text" style="color: red;"> DDL:{{$item.ddl}} </text>
-                <text else class="date-text"> {{$item.date}} </text>
-
-                <div class="delete-choose">
-                    <input type="checkbox" value="{{$idx}}" disabled="{{!choose_delete}}" show="{{choose_delete}}" onchange="ChooseToDelete($idx)">
-                    </input>
+                <div style="width: 10px;">
+                    <button if="{{$item.color==3}}" style="height: 100%; width: 100%; background-color: red;"></button>
+                    <button if="{{$item.color==2}}" style="height: 100%; width: 100%; background-color: indianred;"></button>
+                    <button if="{{$item.color==1}}" style="height: 100%; width: 100%; background-color: blue;"></button>
+                    <button if="{{$item.color==0}}" style="height: 100%; width: 100%; background-color: skyblue;"></button>
                 </div>
+                <div class="div-item">
+                    <text class="title-text" > {{$item.title}} </text>
+
+                    <text if="{{$item.ddl}}" class="date-text" > DDL:{{$item.ddl}} </text>
+                    <text else class="date-text"> {{$item.date}} </text>
+
+                    <div class="delete-choose">
+                        <input type="checkbox" value="{{$idx}}" disabled="{{!choose_delete}}" show="{{choose_delete}}" onchange="ChooseToDelete($idx)">
+                        </input>
+                    </div>
+                </div>
+
             </list-item>
         </list>
     </div>

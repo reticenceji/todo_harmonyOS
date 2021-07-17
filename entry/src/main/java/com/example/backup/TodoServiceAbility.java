@@ -66,10 +66,26 @@ public class TodoServiceAbility extends AceInternalAbility {
                 } catch (RuntimeException e) {
                     HiLog.error(LABEL, "convert failed.");
                 }
-                db.delete(param.id+" title");
-                db.delete(param.id+" date");
-                db.delete(param.id+" text");
-                db.delete(param.id+" ddl");
+                try {
+                    db.delete(param.id + " title");
+                } catch (KvStoreException k){
+                    HiLog.debug(LABEL,"no");
+                };
+                try {
+                    db.delete(param.id + " text");
+                } catch (KvStoreException k){
+                    HiLog.debug(LABEL,"no");
+                };
+                try {
+                    db.delete(param.id + " date");
+                } catch (KvStoreException k){
+                    HiLog.debug(LABEL,"no");
+                };
+                try {
+                    db.delete(param.id + " ddl");
+                } catch (KvStoreException k){
+                    HiLog.debug(LABEL,"no");
+                };
                 HiLog.debug(LABEL, "insert or update success");
                 break;
             }
@@ -82,28 +98,49 @@ public class TodoServiceAbility extends AceInternalAbility {
                 } catch (RuntimeException e) {
                     HiLog.error(LABEL, "convert failed.");
                 }
-                db.putString(param.id+" title",param.title);
-                db.putString(param.id+" date",param.date);
-                db.putString(param.id+" text",param.text);
-                db.putString(param.id+" ddl",param.ddl);
+                if (param.title!=null) db.putString(param.id+" title",param.title);
+                if (param.date!=null) db.putString(param.id+" date",param.date);
+                if (param.text!=null) db.putString(param.id+" text",param.text);
+                if (param.ddl!=null) db.putString(param.id+" ddl",param.ddl);
                 HiLog.debug(LABEL, "insert or update success");
                 break;
             }
             case SELECT_TODOS:{
                 // 返回结果当前仅支持String，对于复杂结构可以序列化为ZSON字符串上报
                 HiLog.debug(LABEL, "Database Return All Result");
+                String condition = data.readString();
+                HiLog.debug(LABEL, "condition="+condition);
                 Set<String> indexes = new HashSet<>();
                 for (Entry i: db.getEntries("")){
                     indexes.add(i.getKey().split(" ")[0]);
                 }
 
                 for (String i: indexes){
-                    String title = db.getString(i+" title");
-                    result.put("title",title);
-                    String date = db.getString(i+" date");
-                    result.put("date",date);
-                    String ddl = db.getString(i+" ddl");
-                    result.put("ddl",ddl);
+                    String title,date,ddl;
+                    try {
+                        title = db.getString(i+" title");
+                        if (title.contains(condition))
+                            result.put("title",title);
+                        else
+                            continue;
+                    }
+                    catch (KvStoreException k){
+                        title = "";
+                    };
+                    try {
+                        date = db.getString(i+" date");
+                        result.put("date",date);
+                    }
+                    catch (KvStoreException k){
+                        date = "";
+                    };
+                    try {
+                        ddl = db.getString(i+" ddl");
+                        result.put("ddl",ddl);
+                    }
+                    catch (KvStoreException k){
+                        ddl = "";
+                    };
 //                    HiLog.debug(LABEL, String.valueOf(result));
                     String rString = ZSONObject.toZSONString(result);
                     ret.put(i,rString);

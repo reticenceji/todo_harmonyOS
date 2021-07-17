@@ -20,13 +20,13 @@ export default {
         CANCEL: "",
         CONFIRM: "",
 
+        index: "",
         ddl_text: "",
         ddls: [1,2,3],
         ddl_to_pass: "",
         ddl: "",
         ddl_exist: false,
         content: {},
-
     },
     onInit() {
         this.ddl_text = this.$t('strings.ddl');
@@ -100,14 +100,14 @@ export default {
 
     },
     InsertTodos: async function(){
-        console.info("ClickToSave()");
+        console.info("ClickToSave()"+this.index);
         var actionData = {};
-        actionData.id = this.index;
+        actionData.id = this.index.toString();
         actionData.title = this.title;
         actionData.text = this.text;
         actionData.date = this.GetToday();
         if (this.ddl_exist)
-        {actionData.ddl = this.ddl_to_pass;}
+            {actionData.ddl = this.ddl_to_pass;}
 
         var action = {};
         action.bundleName = 'com.example.backup';

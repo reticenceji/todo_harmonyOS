@@ -20,7 +20,11 @@ export default {
         add_delete: "+", // 添加按钮/删除按钮
         choose_delete: false, // 当为true的时候，选择删除元素
         choose_indexes: [], // 被选择要删除的TODO列表
-        todoList: [{date: "2021/7/16",title: "Example", ddl: "2021/7/18",ddls: [20,60,70]},{date: "2021/10/6",title: "Example"}], // TODO列表 index,title,date
+        todoList:
+            [
+//                {date: "2021/7/16",title: "Example", ddl: "2021/7/18",ddls: [20,60,70],color: 0},
+//                {date: "2021/10/6",title: "Example"}
+            ], // TODO列表 index,title,date,ddl
         max_index: 0,
     },
     // 初始化
@@ -31,12 +35,9 @@ export default {
         console.info("onInit");
         console.info(this.textList);
     },
-    onShow() {
-        this.getTodos();
+    onShow: async function() {
+        await this.getTodos();
         this.number = this.todoList.length.toString() + this.$t('strings.number');
-        for (var i=0;i<this.todoList.length;i++){
-            this.getColor(i);
-        }
     },
     // 长按TODO text 可以选择删除
     LongPressToChoose() {
@@ -91,10 +92,17 @@ export default {
             this.add_delete = "+";
         }
     },
-    // 希望得到的返回数据是所有的title和date
-    getTodos: async function(){
-        console.info("try to get TODOs");
-        var actionData = {};
+    // 希望得到的返回数据是所有的title date ddl
+    getTodos: async function(condition){
+        console.info("try to get TODOs"+condition);
+        var actionData = "";
+        if (condition===undefined){
+            actionData= "";
+        }
+        else{
+            actionData = condition.text;
+        }
+        console.info("try to get TODOs"+JSON.stringify(condition)+actionData);
 
         var action = {};
         action.bundleName = 'com.example.backup';
@@ -114,16 +122,27 @@ export default {
         var k;
         for (var i in jj) {
             k = jj[i].replace(/\\/, "");
+            console.info("getTodos"+k);
             this.todoList[n] = JSON.parse(k);
-            if (this.todoList[n].ddl != null){
-                var _ddl = this.todoList[n].ddl.split(",");
-                var today = new Date();
-                this.todoList[n].ddl = _ddl[0];
+            this.todoList[n].index = i;
+            if (this.todoList[n].ddl != ""){
+                var _ddls = this.todoList[n].ddl.split(",");
+                this.todoList[n].ddl = _ddls[0];
+                this.todoList[n].ddls = [];
                 this.todoList[n].ddls[0] = _ddls[1];
                 this.todoList[n].ddls[1] = _ddls[2];
                 this.todoList[n].ddls[2] = _ddls[3];
-                this.todoList[n].index = i;
-                console.info("ddls"+this.todoList[n].ddls.toString());
+                var today = new Date();
+                if (today.getTime() >= Date.parse(_ddls[3])){
+                    this.todoList[n].color = 3;
+                } else if (today.getTime() >= Date.parse(_ddls[2])){
+                    this.todoList[n].color = 2;
+                } else if (today.getTime() >= Date.parse(_ddls[1])){
+                    this.todoList[n].color = 1;
+                } else {
+                    this.todoList[n].color = 0;
+                }
+                console.info("getTodos"+this.todoList[n].ddls.toString());
             }
             n++;
         };

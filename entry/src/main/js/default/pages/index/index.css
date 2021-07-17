@@ -30,20 +30,22 @@
 .todo-item {
     margin-left: 5%;
     margin-right: 5%;
-    width: 80px;
     height: 80px;
     justify-content: center;
     background-color: #ffffff;
     border-radius: 10px;
-    padding: 0px 10px;
+    padding: 0px 1px;
     margin-bottom: 15px;
-    flex-direction: column;
+    flex-direction: row;
 }
-
+.div-item {
+    width: 100%;
+    flex-direction: column;
+    margin-left: 10px;
+}
 .title-text{
-    margin: 4;
-    margin-right: 10px;
-    font-size: 28px;
+    margin-top: 10px;
+    font-size: 25px;
 }
 .date-text{
     font-size: 17px;
@@ -54,7 +56,7 @@
     position: absolute;
     width: 40px;
     height: 40px;
-    left: 90%;
+    left: 85%;
     bottom: 25%;
 }
 .addButton {
