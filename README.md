@@ -17,3 +17,11 @@
     2. DDL关键时间节点提醒。着急-迫近-死线。
     3. DDL完成勾选，如果错过DDL也会标记完成。
     
+## 软件截图
+![DDL分级](https://user-images.githubusercontent.com/57006340/126146686-6b562144-541a-4d04-8278-6ed45ede107b.PNG)
+
+![DDL输入](https://user-images.githubusercontent.com/57006340/126146692-f1176b10-8616-4c65-a889-531dc78f32b2.PNG)
+
+![备忘](https://user-images.githubusercontent.com/57006340/126146697-fe3a7922-a69e-4a85-81af-82f75865a008.PNG)
+
+![搜索](https://user-images.githubusercontent.com/57006340/126146698-82c150da-719f-4515-8ec9-450b389e5e4e.PNG)
